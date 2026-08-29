@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pidoras chat</title>
+    <link rel="stylesheet" href="styles.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto+Slab:wght@100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <h2>Pidoras chat - messenger for these very ones</h2>
+    <h4 id="online">Chat online - 0</h4>
+
+    <div class="id">Your name - Левый тип</div>
+    <br>
+    <input type="text" class="user" id="user" placeholder="Enter your name">
+    
+    <label for="avatar-select" class="avatar-label">Load avatar</label>
+    <input type="file" id="avatar-select" accept="image/*">
+
+    <div class="messages">
+        <div class="me">
+            <img src="img/pinkie.jpg" alt="" class="avatar">
+            <div id="myName" class="username">Something</div>
+            <p class="text">It`s me</p>
+        </div>
+
+        <div class="other">
+            <img src="img/gitler.jpg" alt="" class="avatar">
+            <div class="username">Adolf228</div>
+            <p class="text">It`s his</p>
+        </div>
+        
+        <div class="other">
+            <img src="img/kanistra.jpg" alt="" class="avatar">
+            <div class="username">Nesqick fan</div>
+            <p class="text">It`s something else</p>
+        </div>
+        <p class="log">Someone join</p>
+        <p class="log">Someone left</p>
+    </div>
+
+    <form id="chat-form">
+        <input type="text" class="msg" id="inp" placeholder="Messages here">
+        <button id="send" type="submit"> Send </button>
+        <button id="clear" type="button"> Clear </button>
+    </form>
+    
+    <script src="https://cdn.socket.io/4.8.1/socket.io.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
