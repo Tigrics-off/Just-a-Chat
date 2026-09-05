@@ -28,8 +28,7 @@ h2 {
     margin-bottom: 10px;
 }
 
-.user {
-    width: 350px;
+.user, .ip {
     padding: 10px;
     border-radius: 8px;
     border: 1px solid #393e46;
@@ -37,6 +36,9 @@ h2 {
     color: #fff;
     outline: none;
     margin-bottom: 15px;
+}
+.user {
+    width: 350px;
 }
 
 .messages {
@@ -132,6 +134,17 @@ h2 {
     background-color: #ffffffa8;
 }
 
+#conn {
+    padding: 5px;
+    border-radius: 8px;
+    border: none;
+    background-color: #00adb5;
+    color: #fff;
+    outline: none;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
 #avatar-select {
     display: none;
 }
@@ -159,4 +172,10 @@ h2 {
     font-size: 12px;
     align-self: center;
     color: #707886;
+}
+footer
+{
+    font-size: 10px;
+    margin-top: 10px;
+    color: #637185;
 }

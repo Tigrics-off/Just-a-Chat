@@ -1,47 +1,73 @@
-let username = "Random guy";
-let avatar = "img/pinkie.jpg";
+const localUsername = localStorage.getItem('jac/name')
+const localAvatar = localStorage.getItem('jac/avatar')
+
+
+let username = localUsername ?? 'Random guy';
+let avatars = Array.from({ length: 17 }, (_, i) => `img/avatar-${i + 1}.jpg`);
+let avatar = localAvatar ?? avatars[Math.floor(Math.random() * avatars.length)];
 
 const idShow = document.querySelector('.id')
 
 const sendBtn = document.getElementById('send');
 const inp = document.getElementById('inp');
 const nameinp = document.getElementById('user');
+const serverinp = document.getElementById('ip');
+const connBtn = document.getElementById('conn')
 const clearBtn = document.getElementById('clear')
 
 const avatarInput = document.getElementById('avatar-select');
 const avatarLabel = document.querySelector('.avatar-label');
 const onlineLabel = document.getElementById('online');
 
-const socket = io('http://localhost:616');
+nameinp.value = username;
+idShow.innerText = `Your name - ${username}`;
 
-socket.on('history', (msgs) => {
-    const msgsCont = document.querySelector('.messages');
-    msgsCont.innerHTML = '';
+if (localAvatar) {
+    avatarLabel.textContent = 'Avatar restored from storage';
+}
 
-    msgs.forEach(msg => {
-        renderMsg(msg.username, msg.avatar, msg.msg);
+let socket = io(`http://127.0.0.1:616`);
+setupSocketListeners();
+
+connBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    if (socket) socket.disconnect();
+    socket = io(`http://${serverinp.value.trim() || '127.0.0.1'}:616`);
+    setupSocketListeners();
+});
+
+function setupSocketListeners()
+{
+    socket.removeAllListeners();
+    socket.on('history', (msgs) => {
+        const msgsCont = document.querySelector('.messages');
+        msgsCont.innerHTML = '';
+    
+        msgs.forEach(msg => {
+            renderMsg(msg.username, msg.avatar, msg.msg);
+        });
     });
-});
-socket.on('online', (cur_online) => {
-    onlineLabel.innerText = `Chat online - ${cur_online}`;
-});
-socket.on('new_message', (data) => {
-    renderMsg(data.username, data.avatar, data.msg);
-});
-socket.on('msgs_clean', () => {
-    const msgs = document.querySelector('.messages');
-    msgs.innerHTML = '';
-});
-socket.on('change_room', (is_con) => {
-    const msgs = document.querySelector('.messages');
-
-    const logging = document.createElement('p');
-    logging.classList.add('log');
-    logging.innerText = is_con ? "Someone join" : "Someone left";
-    msgs.append(logging);
-
-    msgs.scrollTop = msgs.scrollHeight;
-});
+    socket.on('online', (cur_online) => {
+        onlineLabel.innerText = `Chat online - ${cur_online}`;
+    });
+    socket.on('new_message', (data) => {
+        renderMsg(data.username, data.avatar, data.msg);
+    });
+    socket.on('msgs_clean', () => {
+        const msgs = document.querySelector('.messages');
+        msgs.innerHTML = '';
+    });
+    socket.on('change_room', (is_con) => {
+        const msgs = document.querySelector('.messages');
+    
+        const logging = document.createElement('p');
+        logging.classList.add('log');
+        logging.innerText = is_con ? "Someone join" : "Someone left";
+        msgs.append(logging);
+    
+        msgs.scrollTop = msgs.scrollHeight;
+    });
+}
 
 function renderMsg(User, Avatar, Text)
 {
@@ -77,13 +103,13 @@ function addMsg()
             msg: inp.value
         });
         inp.value = '';
-
     }
 }
 
 nameinp.addEventListener('input', (e) => {
     username = e.target.value || "Something";
     idShow.innerHTML = `Your name - ${username}`
+    localStorage.setItem('jac/name', username)
 });
 
 avatarInput.addEventListener('change', (e) => {
@@ -97,6 +123,7 @@ avatarInput.addEventListener('change', (e) => {
             avatar = event.target.result;
             
             avatarLabel.textContent = `Avatar loaded ${file.name}`
+            localStorage.setItem('jac/avatar', avatar)
         };
 
         reader.readAsDataURL(file);

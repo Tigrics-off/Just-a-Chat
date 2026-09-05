@@ -4,8 +4,8 @@
   "description": "",
   "main": "src/index.js",
   "scripts": {
-    "product": "node .",
-    "debug": "node --watch ."
+    "prod": "node .",
+    "test": "node --watch ."
   },
   "keywords": [],
   "author": "",

@@ -14,28 +14,32 @@
     <h2>Pidoras chat - messenger for these very ones</h2>
     <h4 id="online">Chat online - 0</h4>
 
-    <div class="id">Your name - Левый тип</div>
+    <div class="id">Your name - Random guy</div>
     <br>
     <input type="text" class="user" id="user" placeholder="Enter your name">
-    
+    <form id="ip-form">
+        <input type="text" class="ip" id="ip" placeholder="Enter server IP">
+        <button id="conn"> Connect </button>
+    </form>
     <label for="avatar-select" class="avatar-label">Load avatar</label>
     <input type="file" id="avatar-select" accept="image/*">
 
+    
     <div class="messages">
         <div class="me">
-            <img src="img/pinkie.jpg" alt="" class="avatar">
-            <div id="myName" class="username">Something</div>
+            <img src="img/avatar-3.jpg" alt="" class="avatar">
+            <div id="myName" class="username">Random guy</div>
             <p class="text">It`s me</p>
         </div>
 
         <div class="other">
-            <img src="img/gitler.jpg" alt="" class="avatar">
+            <img src="img/avatar-1.jpg" alt="" class="avatar">
             <div class="username">Adolf228</div>
             <p class="text">It`s his</p>
         </div>
         
         <div class="other">
-            <img src="img/kanistra.jpg" alt="" class="avatar">
+            <img src="img/avatar-2.jpg" alt="" class="avatar">
             <div class="username">Nesqick fan</div>
             <p class="text">It`s something else</p>
         </div>
@@ -49,6 +53,8 @@
         <button id="clear" type="button"> Clear </button>
     </form>
     
+    <footer>©Valeve Corporaion 2026-2999. All rights not reversed</footer>
+
     <script src="https://cdn.socket.io/4.8.1/socket.io.min.js"></script>
     <script src="script.js"></script>
 </body>
