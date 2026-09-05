@@ -1,4 +1,4 @@
-# 💬 Real-Time Web Chat App
+# 💬 Just A Chat - Real-Time Web Chat App
 
 A full-stack real-time chat application built with **Node.js**, **Express**, **Socket.IO**, and **Better-SQLite3**.
 
@@ -18,12 +18,12 @@ A full-stack real-time chat application built with **Node.js**, **Express**, **S
 
 1. **Clone the repository**
     ```bash
-    git clone [https://github.com/your-username/your-repo-name.git](https://github.com/your-username/your-repo-name.git)
-    cd your-repo-name/Back
+    git clone https://github.com/Tigrics-off/Just-a-Chat.git
+    cd Just-a-Chat/Back
 2. **Install dependencies**
     ```bash
     npm install
 3. **Run the server**
-    ``bash
-    npm run product
+    ```bash
+    npm run prod
 4. **Deploy and open frontend**
