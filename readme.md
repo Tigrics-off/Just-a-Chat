@@ -2,7 +2,7 @@
 
 A full-stack real-time chat application built with **Node.js**, **Express**, **Socket.IO**, and **Better-SQLite3**.
 
-![App Screenshot](./screenshot.png) ## 🚀 Features
+## 🚀 Features
 - ⚡ **Real-time messaging** via WebSockets (Socket.IO).
 - 💾 **Message history persistence** using SQLite database.
 - 🖼️ **Custom Usernames & Avatars** (supports Base64 image uploads).

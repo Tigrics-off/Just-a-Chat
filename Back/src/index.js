@@ -2,8 +2,6 @@ const exp = require('express')
 const http = require('http')
 const { Server } = require('socket.io')
 const Database = require('better-sqlite3')
-const path = require('path')
-const { error } = require('console')
 
 let cur_online = 0;
 
@@ -27,7 +25,16 @@ db.exec(/*sql*/`
 `);
 
 const newMsg = db.prepare(/*sql*/`insert into messages (username, avatar, msg) values (?, ?, ?)`);
-const getHis = db.prepare(/*sql*/`select username, avatar, msg from messages order by id asc limit 50`)
+const getHis = db.prepare(/*sql*/`
+    select username, avatar, msg
+    from (
+        select id, username, avatar, msg
+        from messages
+        order by id desc
+        limit 50
+    )
+    order by id asc
+`);
 
 io.on('connection', (socket) => {
     console.log('Hello, ', socket.id);
@@ -39,7 +46,9 @@ io.on('connection', (socket) => {
     socket.emit('history', history);
 
     socket.on('send_message', (data) => {
-        const { username, avatar, msg } = data
+        let { username, avatar, msg } = data
+        username = username.slice(0, 16);
+        msg = msg.slice(0, 1024);
 
         if (!msg || !msg.trim()) return;
 

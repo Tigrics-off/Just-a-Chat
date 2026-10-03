@@ -22,17 +22,31 @@ const onlineLabel = document.getElementById('online');
 nameinp.value = username;
 idShow.innerText = `Your name - ${username}`;
 
-if (localAvatar) {
+if (localAvatar)
+{
     avatarLabel.textContent = 'Avatar restored from storage';
 }
 
 let socket = io(`http://127.0.0.1:616`);
 setupSocketListeners();
 
+function createLink(host)
+{
+    host = host.trim();
+    if (!host)
+        host = '127.0.0.1'
+
+    if (!host.startsWith('http://') && !host.startsWith('https://'))
+        host = `http://${host}`;
+
+    return io(`${host}:616`);
+}
+
 connBtn.addEventListener('click', (e) => {
     e.preventDefault();
     if (socket) socket.disconnect();
-    socket = io(`http://${serverinp.value.trim() || '127.0.0.1'}:616`);
+    
+    socket = createLink(serverinp.value);
     setupSocketListeners();
 });
 
@@ -67,6 +81,9 @@ function setupSocketListeners()
     
         msgs.scrollTop = msgs.scrollHeight;
     });
+    socket.on("connect_error", (err) => {
+        alert(`Connection error: ${err.message}`);
+    });
 }
 
 function renderMsg(User, Avatar, Text)
@@ -97,6 +114,8 @@ function addMsg()
 {
     if (inp.value.trim() != '')
     {
+        username = username.slice(0, 16);
+        inp.value = inp.value.slice(0, 1024);
         socket.emit('send_message', {
             username: username,
             avatar: avatar,
@@ -108,7 +127,7 @@ function addMsg()
 
 nameinp.addEventListener('input', (e) => {
     username = e.target.value || "Something";
-    idShow.innerHTML = `Your name - ${username}`
+    idShow.innerText = `Your name - ${username}`
     localStorage.setItem('jac/name', username)
 });
 
@@ -129,6 +148,7 @@ avatarInput.addEventListener('change', (e) => {
         reader.readAsDataURL(file);
     }
 });
+
 
 const chatForm = document.getElementById('chat-form');
 
